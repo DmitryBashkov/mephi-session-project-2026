@@ -380,3 +380,75 @@
   380  git add .
   381  git status
   382  history > history.out 
+  383  dnf history > dnf.out 
+  384  ping 8.8.8.8
+  385  git status
+  386  git add . 
+  387  git status
+  388  git commit -a -m 'job's done'
+  389  git commit -a -m 'job's done'
+  390  git commit -a -m 'job's done'
+  391  ;
+  392  git commit -m 'job's done'
+  393  git commit
+  394  git branch -M main
+  395  git remote add origin https://github.com/dmitrybashkov/mephi-session-project-2026.git
+  396  git push main origin
+  397  git remote get-url
+  398  git remote get-url --all
+  399  git remote --all
+  400  git remote get-url origin
+  401  git push main origin
+  402  git branch
+  403  git commit -m 'job's done'
+  404  git commit -m "job's done"
+  405  git push -u main origin
+  406  git remote add origin https://github.com/dmitrybashkov/mephi-session-project-2026.git
+  407  git push -u origin main
+  408  ssh-keygen -t ed25519
+  409  cat /root/.ssh/id_ed25519.pub 
+  410  nano /root/.ssh/config
+  411  git push -u origin main
+  412  git remote list
+  413  git remote remove
+  414  git remote remove origin
+  415  git remote add origin git@github.com:DmitryBashkov/mephi-session-project-2026.git
+  416  git push -u origin main
+  417  curl 127.0.0.1
+  418  less /var/log/audit/audit.log 
+  419  less /var/log/audit/audit.log | grep root
+  420  less /var/log/audit/audit.log | grep auth
+  421  less /var/log/audit/audit.log | grep authent
+  422  less /var/log/audit/audit.log | grep faild
+  423  less /var/log/audit/audit.log | grep failed
+  424  cat /etc/ssh/sshd_config | grep GSS
+  425  cat /etc/ssh/sshd_config | grep Root
+  426  nano /etc/ssh/sshd_config
+  427  systemctl restart sshd
+  428  poweroff
+  429  cd os-security-2/
+  430  groupadd dev
+  431  usermod -aG dev user1
+  432  usermod -aG dev user2
+  433  usermod -aG dev user3
+  434  gpasswd --help
+  435  gpasswd -d user1
+  436  gpasswd -d user1 users
+  437  gpasswd -d user2 users
+  438  gpasswd -d user3 users
+  439  chggrp dev /data/mephi-2026/
+  440  chgrp dev /data/mephi-2026/
+  441  setfacl -m g:dev:rwx /data/mephi-2026/
+  442  setfacl -m d:g:dev:rwx /data/mephi-2026/
+  443  setfacl -m g:curators:r-X /data/mephi-2026/
+  444  setfacl -m d:g:curators:r-X /data/mephi-2026/
+  445  setfacl -x g:users /data/mephi-2026/
+  446  setfacl -x d:g:users /data/mephi-2026/
+  447  getfacl /data/mephi-2026/
+  448  getfacl /data/
+  449  getent passwd
+  450  id user1
+  451  id user2
+  452  id curator1
+  453  getent group dev
+  454  history > history.out 

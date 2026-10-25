@@ -20,7 +20,7 @@ video:x:39:
 ftp:x:50:
 lock:x:54:
 audio:x:63:
-users:x:100:user1,user2,user3
+users:x:100:
 nobody:x:65534:
 dbus:x:81:
 utmp:x:22:
@@ -48,3 +48,5 @@ user2:x:5502:
 user3:x:5503:
 curator1:x:5504:
 curator2:x:5505:
+tcpdump:x:72:
+dev:x:5506:user1,user2,user3
