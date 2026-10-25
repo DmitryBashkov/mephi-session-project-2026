@@ -1,0 +1,2 @@
+curator1:x:5504:5504::/home/curator1:/sbin/nologin
+curator2:x:5505:5505::/home/curator2:/sbin/nologin

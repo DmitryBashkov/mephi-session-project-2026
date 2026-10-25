@@ -1,0 +1,4 @@
+17:18:46.030464 enp0s3 Out IP mephi-2026.domain.local.ssh > _gateway.56826: Flags [P.], seq 420287346:420287550, ack 89530567, win 65535, length 204
+17:18:46.030886 enp0s3 In  IP _gateway.56826 > mephi-2026.domain.local.ssh: Flags [.], ack 204, win 65535, length 0
+17:18:46.032948 enp0s3 In  IP _gateway.56826 > mephi-2026.domain.local.ssh: Flags [P.], seq 1:37, ack 204, win 65535, length 36
+17:18:46.033027 enp0s3 Out IP mephi-2026.domain.local.ssh > _gateway.56826: Flags [P.], seq 204:240, ack 37, win 65535, length 36

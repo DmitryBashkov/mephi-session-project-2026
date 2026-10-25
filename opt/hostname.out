@@ -1,0 +1,14 @@
+ Static hostname: mephi-2026.domain.local
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: fe9a63d6383645f3944e70f50df3faad
+         Boot ID: b8605008f681418c829ba062cc46a7c3
+  Virtualization: oracle
+Operating System: RED OS 8.0.3 (Standard Server Minimal)
+     CPE OS Name: cpe:/o:redos:redos:8
+          Kernel: Linux 6.12.92-1.red80.x86_64
+    Architecture: x86-64
+ Hardware Vendor: innotek GmbH
+  Hardware Model: VirtualBox
+Firmware Version: VirtualBox
+   Firmware Date: Fri 2006-12-01

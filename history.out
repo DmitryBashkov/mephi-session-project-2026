@@ -1,0 +1,382 @@
+    1  ip a
+    2  ls -l
+    3  mkdir os-security-2
+    4  cd os-security-2/
+    5  ip a > ip-output
+    6  cat ip-output 
+    7  ls -l
+    8  parted
+    9  parted --help
+   10  parted -s /dev/sdb
+   11  parted --help
+   12  parted -l
+   13  poweroff
+   14  parted -l
+   15  groupadd -help
+   16  mkdir -mkmkmkmkmkdf;lsadkf;lsadf
+   17  mk
+   18  poweroff
+   19  mkdir --help
+   20  chgrp --help
+   21  setflac
+   22  setfalc
+   23  dnf install setfacl
+   24  dnf install acl
+   25  setfacl
+   26  setfacl --help
+   27  ip a
+   28  poweroff
+   29  ip a
+   30  reboot
+   31  ip a
+   32  ip route
+   33  ip rule 
+   34  dhclient -4 -v
+   35  reboot
+   36  ip a
+   37  dhclient -4 -v
+   38  reboot
+   39  nano /etc/ssh/sshd_config
+   40  cat /etc/ssh/sshd_config
+   41  systemctl restart sshd
+   42  passwd
+   43  nano /etc/ssh/sshd_config
+   44  systemctl restart sshd
+   45  reboot
+   46  ls -l
+   47  cd os-security-2/
+   48  ls -l
+   49  vim setup.sh
+   50  nano setup.sh
+   51  sh ./setup.sh 
+   52  # Раздел 1. Установка дистрибутива (5 баллов)
+   53  # === task 1.1 ===
+   54  ip a > ip-output
+   55  echo $(cat ip-output) 
+   56  echo "[  DONE  ] task 1.2"
+   57  # === task 1.2 ===
+   58  hostnamectl set-hostname mephi-2026.domain.local
+   59  echo "[  DONE  ] task 1.2"
+   60  # === task 1.3 ===
+   61  ping -c 4 8.8.8.8 > ping.out
+   62  echo "[  DONE  ] task 1.3"
+   63  # Раздел 2. Управление программным обеспечением (5 баллов)
+   64  # === task 2.1 ===
+   65  dnf update -y
+   66  echo echo "[  DONE  ] task 2.1"
+   67  # === task 2.2 ===
+   68  dnf install -y nginx libcap-ng-utils acl
+   69  echo "[  DONE  ] task 2.2"
+   70  # === task 2.3 ==="
+   71  mkdir -p /tmp/packages
+   72  dnf download tcpdump --resolve --destdir /tmp/packages
+   73  rpm -ivh /tmp/packages/tcpdump*.rpm
+   74  dnf history > dnf.out
+   75  echo "[  DONE  ] task 2.3"
+   76  # Раздел 3. Управление файловыми системами (5 баллов)
+   77  # === task 3.1 ===
+   78  parted -s /dev/sdb mklabel gpt
+   79  parted -s /dev/sdb mkpart primary ext4 0% 100%
+   80  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+   81  echo "[  DONE  ] task 3.1"
+   82  # === task 3.2 ===
+   83  mkdir /mephi-web
+   84  echo 'LABEL=MEPHI_WEB /mephi-web ext4 defaults 1 2' >> /etc/fstab
+   85  systemctl daemon-reload
+   86  mount -a
+   87  echo "[  DONE  ] task 3.2"
+   88  # Раздел 4. Управление сервисами (5 баллов)
+   89  # === task 4.1 ===
+   90  systemctl start nginx
+   91  systemctl enable nginx
+   92  echo "[  DONE  ] task 4.1"
+   93  # === task 4.2 ===
+   94  journalctl -u nginx -b > journalctl.out
+   95  echo "[  DONE  ] task 4.1"
+   96  # Раздел 5. Управление доступом (15 баллов)
+   97  # === task 5.1 ==="
+   98  mkdir -p -m 2770 /data/mephi-2026
+   99  groupadd users
+  100  groupadd -g 4444 curators
+  101  chgrp users /datamephi-2026
+  102  useradd -u 5501 -m -G users user1 
+  103  useradd -u 5502 -m -G users user2
+  104  useradd -u 5503 -m -G users user3
+  105  useradd -m -G curators curator1
+  106  useradd -m -G curators curator2
+  107  setfacl -m g:curators:r-X -m d:g:curators:r-X /data/mephi-2026
+  108  echo "[  DONE  ] task 5.1"
+  109  # === task 5.2 ===
+  110  chmod u-s /usr/sbin/tcpdump
+  111  setcap cap_net_raw,cap_net_admin+eip /usr/sbin/tcpdump
+  112  sudo -u user1 tcpdump -i any -c 4 > tcp.dump
+  113  echo "[  DONE  ] task 5.2"
+  114  # === task 5.3 ===
+  115  semanage fcontext -a -t httpd_sys_content_t '/mephi-web(/.*)?'
+  116  restorecon -Rv /mephi-web
+  117  getenforce
+  118  echo "[  DONE  ] task 5.3"
+  119  # Раздел 6. Аутентификация (5 баллов)
+  120  # === task 6.1 ===
+  121  usermod -s /sbin/nologin curator1
+  122  usermod -s /sbin/nologin curator2
+  123  # === task 6.2 ===
+  124  chage -M 90 user1
+  125  chage -M 90 user2
+  126  chage -M 90 user3
+  127  chage -M 90 curator1
+  128  chage -M 90 curator2
+  129  echo 'minlen = 12' >> /etc/security/pwquality.conf
+  130  echo "[  DONE  ] task 6.1"
+  131  # Раздел 7. Тестирование (5 баллов)
+  132  # === task 7.1 ===
+  133  echo 'Hello from Student: 12345' > /mephi-web/index.html
+  134  chmod 664 /mephi-web/index.html
+  135  chgrp users /mephi-web/index.html
+  136  restorecon -Rv /mephi-web
+  137  echo "[  DONE  ] task 7.1"
+  138  # === task 7.2 ===
+  139  curl http://localhost/
+  140  echo "[  DONE  ] task 7.2"
+  141  # Раздел 8. Публикация результатов на GitHub (ОБЯЗАТЕЛЬНО, 5 баллов, без этого задание не принимается)
+  142  # === task 8.1 ===
+  143  history > history.out
+  144  ping -c 4 8.8.8.8 > ping.out
+  145  stat /data/mephi-2026 > stat.out
+  146  stat /mephi-web >> stat.out
+  147  getcap /usr/sbin/tcpdump > getcap.out
+  148  dnf history > dnf.out
+  149  journalctl -u nginx -b > journalctl.out
+  150  getenforce > getenforce.out
+  151  curl http://localhost/ > curl.out
+  152  echo "[  DONE  ] task 8.1"
+  153  # === task 8.2 ===
+  154  cp /etc/passwd ./passwd
+  155  cp /etc/shadow ./shadow
+  156  cp /etc/group ./group
+  157  cp /etc/fstab ./fstab
+  158  cp /etc/security/pwquality.conf ./pwquality.conf
+  159  echo "[  DONE  ] task 8.2"
+  160  git init
+  161  # Раздел 1. Установка дистрибутива (5 баллов)
+  162  # === task 1.1 ===
+  163  ip a > ip-output
+  164  echo $(cat ip-output) 
+  165  echo "[  DONE  ] task 1.2"
+  166  # === task 1.2 ===
+  167  hostnamectl set-hostname mephi-2026.domain.local
+  168  echo "[  DONE  ] task 1.2"
+  169  # === task 1.3 ===
+  170  ping -c 4 8.8.8.8 > ping.out
+  171  echo "[  DONE  ] task 1.3"
+  172  # Раздел 2. Управление программным обеспечением (5 баллов)
+  173  # === task 2.1 ===
+  174  dnf update -y
+  175  echo echo "[  DONE  ] task 2.1"
+  176  # === task 2.2 ===
+  177  dnf install -y nginx libcap-ng-utils acl
+  178  echo "[  DONE  ] task 2.2"
+  179  # === task 2.3 ==="
+  180  mkdir -p /tmp/packages
+  181  dnf download tcpdump --resolve --destdir /tmp/packages
+  182  rpm -ivh /tmp/packages/tcpdump*.rpm
+  183  dnf history > dnf.out
+  184  echo "[  DONE  ] task 2.3"
+  185  # Раздел 3. Управление файловыми системами (5 баллов)
+  186  # === task 3.1 ===
+  187  parted -s /dev/sdb mklabel gpt
+  188  parted -s /dev/sdb mkpart primary ext4 0% 100%
+  189  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+  190  echo "[  DONE  ] task 3.1"
+  191  # === task 3.2 ===
+  192  mkdir /mephi-web
+  193  echo 'LABEL=MEPHI_WEB /mephi-web ext4 defaults 1 2' >> /etc/fstab
+  194  systemctl daemon-reload
+  195  mount -a
+  196  echo "[  DONE  ] task 3.2"
+  197  # Раздел 4. Управление сервисами (5 баллов)
+  198  # === task 4.1 ===
+  199  systemctl start nginx
+  200  systemctl enable nginx
+  201  echo "[  DONE  ] task 4.1"
+  202  # === task 4.2 ===
+  203  journalctl -u nginx -b > journalctl.out
+  204  echo "[  DONE  ] task 4.1"
+  205  # Раздел 5. Управление доступом (15 баллов)
+  206  # === task 5.1 ==="
+  207  mkdir -p -m 2770 /data/mephi-2026
+  208  groupadd users
+  209  groupadd -g 4444 curators
+  210  chgrp users /datamephi-2026
+  211  useradd -u 5501 -m -G users user1 
+  212  useradd -u 5502 -m -G users user2
+  213  useradd -u 5503 -m -G users user3
+  214  useradd -m -G curators curator1
+  215  useradd -m -G curators curator2
+  216  setfacl -m g:curators:r-X -m d:g:curators:r-X /data/mephi-2026
+  217  echo "[  DONE  ] task 5.1"
+  218  # === task 5.2 ===
+  219  chmod u-s /usr/sbin/tcpdump
+  220  setcap cap_net_raw,cap_net_admin+eip /usr/sbin/tcpdump
+  221  sudo -u user1 tcpdump -i any -c 4 > tcp.dump
+  222  echo "[  DONE  ] task 5.2"
+  223  # === task 5.3 ===
+  224  semanage fcontext -a -t httpd_sys_content_t '/mephi-web(/.*)?'
+  225  restorecon -Rv /mephi-web
+  226  getenforce
+  227  echo "[  DONE  ] task 5.3"
+  228  # Раздел 6. Аутентификация (5 баллов)
+  229  # === task 6.1 ===
+  230  usermod -s /sbin/nologin curator1
+  231  usermod -s /sbin/nologin curator2
+  232  # === task 6.2 ===
+  233  chage -M 90 user1
+  234  chage -M 90 user2
+  235  chage -M 90 user3
+  236  chage -M 90 curator1
+  237  chage -M 90 curator2
+  238  echo 'minlen = 12' >> /etc/security/pwquality.conf
+  239  echo "[  DONE  ] task 6.1"
+  240  # Раздел 7. Тестирование (5 баллов)
+  241  # === task 7.1 ===
+  242  echo 'Hello from Student: 12345' > /mephi-web/index.html
+  243  chmod 664 /mephi-web/index.html
+  244  chgrp users /mephi-web/index.html
+  245  restorecon -Rv /mephi-web
+  246  echo "[  DONE  ] task 7.1"
+  247  # === task 7.2 ===
+  248  curl http://localhost/
+  249  echo "[  DONE  ] task 7.2"
+  250  # Раздел 8. Публикация результатов на GitHub (ОБЯЗАТЕЛЬНО, 5 баллов, без этого задание не принимается)
+  251  # === task 8.1 ===
+  252  history > history.out
+  253  ping -c 4 8.8.8.8 > ping.out
+  254  stat /data/mephi-2026 > stat.out
+  255  stat /mephi-web >> stat.out
+  256  getcap /usr/sbin/tcpdump > getcap.out
+  257  dnf history > dnf.out
+  258  journalctl -u nginx -b > journalctl.out
+  259  getenforce > getenforce.out
+  260  curl http://localhost/ > curl.out
+  261  echo "[  DONE  ] task 8.1"
+  262  # === task 8.2 ===
+  263  cp /etc/passwd ./passwd
+  264  cp /etc/shadow ./shadow
+  265  cp /etc/group ./group
+  266  cp /etc/fstab ./fstab
+  267  cp /etc/security/pwquality.conf ./pwquality.conf
+  268  echo "[  DONE  ] task 8.2"
+  269  git init
+  270  qsdsd
+  271  ls -l
+  272  less curl.out 
+  273  cat shadow 
+  274  ls -l
+  275  cat history.out 
+  276  ls -l
+  277  cat getcap.out 
+  278  getcap
+  279  getcap /usr/sbin/tcpdump
+  280  dnf install tcpdump
+  281  ls -l /tmp
+  282  cd packages
+  283  cd /tmp/packages/
+  284  ls -l
+  285  dnf uninstall
+  286  dnf --help
+  287  dnf remove tcpdump-14:4.99.5-1.red80.x86_64
+  288  rpm -ivh tcpdump-4.99.5-1.red80.x86_64.rpm 
+  289  dnf history > dnf.out
+  290  cat ndf.out
+  291  mv dnf.out /root/os-security-2/
+  292  cd /
+  293  ls -l
+  294  cd mephi-web/
+  295  ls -l
+  296  cat index.html 
+  297  curl 127.0.0.1
+  298  systemctl status nginx
+  299  nano /etc/nginx/nginx.conf
+  300  nginx -t
+  301  systemctl restart nginx
+  302  curl 127.0.0.1
+  303  ls -Zd /mephi-web/
+  304  restorecon -Rv /mephi-web/
+  305  ls -Zd /mephi-web/
+  306  restorecon /mephi-web/index.html 
+  307  curl 127.0.0.1
+  308  restorecon -v /mephi-web/index.html 
+  309  curl 127.0.0.1
+  310  curl http://localhost
+  311  curl http://localhost/index
+  312  curl http://localhost/index.html
+  313  ls -Zd index.html 
+  314  ls -l index.html 
+  315  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+  316  semanage
+  317  dnf install semanage
+  318  dnf install policycoreutils-python-utils
+  319  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+  320  restorecon -Rv /mephi-web/
+  321  curl 127.0.0.1
+  322  cat "Hello from Student: 372316" > index.html
+  323  echo "Hello from Student: 372316" > index.html
+  324  curl 127.0.0.1
+  325  hostnamectl
+  326  cd ..
+  327  cd root/os-security-2/
+  328  hostnamectl > hostname.out
+  329  tcpdump
+  330  getcap tcpdump
+  331  getcap /usr/sbin/tcpdump
+  332  ls -l /usr/sbin 
+  333  chmod u-s /usr/sbin/tcpdump
+  334  setcap cap_net_raw,cap_net_admin+eip /usr/sbin/tcpdump
+  335  sudo -u user1 tcpdump -i any -c 4 > tcp.dump
+  336  ls -l /
+  337  ls -l /data/mephi-2026/
+  338  ls -Zd  /data
+  339  restorecon /data/mephi-2026/
+  340  ls -Zd  /data
+  341  getent passwd
+  342  getent passwd | grep cureator > curator_no_login.out
+  343  cat curator_no_login.out 
+  344  getent passwd | grep curator > curator_no_login.out
+  345  cat curator_no_login.out 
+  346  cat pwquality.conf 
+  347  less history.out 
+  348  less history
+  349  history 
+  350  history > history.out
+  351  cat stat.out
+  352  stat /data/mephi-2026/ > stat.out
+  353  stat /mephi-web/ >> stat.out
+  354  cat stat.out 
+  355  less dnf.out
+  356  dnf history > dnf.out
+  357  less dnf.out
+  358  less journalctl.out 
+  359  cat getenforce.out 
+  360  getenforce
+  361  cat curl.out 
+  362  curl 127.0.0.1 > curl.out
+  363  cat curl.out 
+  364  cat passwd 
+  365  cat shadow 
+  366  cat group
+  367  cat fstab 
+  368  parted --help
+  369  parted -l
+  370  parted --help
+  371  parted -l
+  372  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+  373  mount
+  374  dnf install git
+  375  git init
+  376  git status
+  377  mkdir opt
+  378  mv curator_no_login.out hostname.out ip-output opt/
+  379  git status
+  380  git add .
+  381  git status
+  382  history > history.out 
